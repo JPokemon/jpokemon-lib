@@ -1,76 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <!-- Project details -->
-    <groupId>org.jpokemon</groupId>
-    <artifactId>jpokemon-lib</artifactId>
-    <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
-    <name>JPokemon API Implementations</name>
-    <description>Specific implementations of jpokemon-api classes and interfaces</description>
-    <inceptionYear>2014</inceptionYear>
-    <url>http://jpokemon.org</url>
+	<!-- Project details -->
+	<groupId>org.jpokemon</groupId>
+	<artifactId>jpokemon-lib</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name>JPokemon API Implementations</name>
+	<description>Specific implementations of jpokemon-api classes and interfaces</description>
+	<inceptionYear>2014</inceptionYear>
+	<url>http://jpokemon.org</url>
 
-    <!-- Project properties & definitions -->
-    <properties>
-        <finalName>${project.artifactId}-${project.version}.jar</finalName>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+	<!-- Project properties & definitions -->
+	<properties>
+		<finalName>${project.artifactId}-${project.version}.jar</finalName>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
-    <!-- The project is licensed under the ISC -->
-    <licenses> 
-        <license> 
-            <name>The MIT License</name>
-            <url>http://opensource.org/licenses/MIT</url>            
-        </license> 
-    </licenses>
+	<!-- The project is licensed under the MIT -->
+	<licenses>
+		<license>
+			<name>The MIT License</name>
+			<url>http://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
 
-    <!-- Source code repository -->
-    <scm> 
-        <connection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</connection> 
-        <developerConnection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</developerConnection> 
-        <url>https://github.com/JPokemon/jpokemon-lib</url>
-    </scm>
+	<!-- Source code repository -->
+	<scm>
+		<connection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</connection>
+		<developerConnection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</developerConnection>
+		<url>https://github.com/JPokemon/jpokemon-lib</url>
+	</scm>
 
-    <!-- Developers -->
-    <developers>
-        <developer>
-            <name>Zach Taylor</name>
-            <email>zach.taylor673@gmail.com</email>
-        </developer>
-    </developers>
-  
-    <!-- Project dependencies -->
-    <dependencies>
-        <dependency> 
-            <groupId>junit</groupId> 
-            <artifactId>junit</artifactId> 
-            <version>4.11</version> 
-            <scope>test</scope> 
-        </dependency>
-        <dependency>
-            <groupId>org.jpokemon</groupId>
-            <artifactId>jpokemon-api</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+	<!-- Developers -->
+	<developers>
+		<developer>
+			<name>Zach Taylor</name>
+			<email>zach.taylor673@gmail.com</email>
+		</developer>
+	</developers>
 
+	<!-- Project dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.jpokemon</groupId>
+			<artifactId>jpokemon-api</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <!-- Build information -->
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<!-- Build information -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
