@@ -1,8 +1,8 @@
 package org.jpokemon;
 
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.SimpleTypeManager;
 import org.jpokemon.api.Type;
+import org.jpokemon.manager.SimpleTypeManager;
 
 /**
  * Provides a possible implementation of the {@link Type#manager}, using the 18

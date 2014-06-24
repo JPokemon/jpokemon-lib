@@ -2,10 +2,10 @@ package org.jpokemon;
 
 import org.jpokemon.api.EvolutionFactory;
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.SimpleEvolutionFactoryManager;
 import org.jpokemon.evolution.HappinessEvolution;
 import org.jpokemon.evolution.LevelEvolution;
 import org.jpokemon.evolution.StoneEvolution;
+import org.jpokemon.manager.SimpleEvolutionFactoryManager;
 
 /**
  * Provides an example implementation of the {@link EvolutionFactory#manager},

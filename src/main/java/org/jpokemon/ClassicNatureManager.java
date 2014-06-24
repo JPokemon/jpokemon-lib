@@ -2,7 +2,7 @@ package org.jpokemon;
 
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Nature;
-import org.jpokemon.api.SimpleNatureManager;
+import org.jpokemon.manager.SimpleNatureManager;
 
 /**
  * Provides a possible implementation of the {@link Nature#manager}, using the

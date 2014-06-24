@@ -2,13 +2,13 @@ package org.jpokemon;
 
 import org.jpokemon.api.ExperienceCurve;
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.SimpleExperienceCurveManager;
 import org.jpokemon.experiencecurve.ErraticExperienceCurve;
 import org.jpokemon.experiencecurve.FastExperienceCurve;
 import org.jpokemon.experiencecurve.FluctuatingExperienceCurve;
 import org.jpokemon.experiencecurve.MediumFastExperienceCurve;
 import org.jpokemon.experiencecurve.MediumSlowExperienceCurve;
 import org.jpokemon.experiencecurve.SlowExperienceCurve;
+import org.jpokemon.manager.SimpleExperienceCurveManager;
 
 /**
  * Provides an example implementation of the {@link ExperienceCurve#manager},

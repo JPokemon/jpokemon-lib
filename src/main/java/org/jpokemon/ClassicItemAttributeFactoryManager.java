@@ -2,13 +2,13 @@ package org.jpokemon;
 
 import org.jpokemon.api.ItemAttributeFactory;
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.SimpleItemAttributeFactoryManager;
 import org.jpokemon.itemattribute.BallAttribute;
 import org.jpokemon.itemattribute.BerryAttribute;
 import org.jpokemon.itemattribute.EvolutionStoneAttribute;
 import org.jpokemon.itemattribute.MachineAttribute;
 import org.jpokemon.itemattribute.MedicineAttribute;
 import org.jpokemon.itemattribute.PocketAttribute;
+import org.jpokemon.manager.SimpleItemAttributeFactoryManager;
 
 /**
  * Provides an example implementation of the
