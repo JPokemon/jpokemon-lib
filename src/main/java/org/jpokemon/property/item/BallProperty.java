@@ -44,8 +44,8 @@ public class BallProperty {
 		}
 
 		@Override
-		public Class<BallProperty> getPropertyClass() {
-			return BallProperty.class;
+		public String getName() {
+			return BallProperty.class.getName();
 		}
 
 		@Override

@@ -40,8 +40,8 @@ public class EvolutionStoneProperty {
 		}
 
 		@Override
-		public Class<EvolutionStoneProperty> getPropertyClass() {
-			return EvolutionStoneProperty.class;
+		public String getName() {
+			return EvolutionStoneProperty.class.getName();
 		}
 
 		@Override

@@ -81,8 +81,8 @@ public class BerryProperty {
 		}
 
 		@Override
-		public Class<BerryProperty> getPropertyClass() {
-			return BerryProperty.class;
+		public String getName() {
+			return BerryProperty.class.getName();
 		}
 
 		@Override

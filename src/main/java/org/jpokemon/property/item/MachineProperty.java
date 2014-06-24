@@ -45,8 +45,8 @@ public class MachineProperty {
 		}
 
 		@Override
-		public Class<MachineProperty> getPropertyClass() {
-			return MachineProperty.class;
+		public String getName() {
+			return MachineProperty.class.getName();
 		}
 
 		@Override

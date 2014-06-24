@@ -71,8 +71,8 @@ public class MedicineProperty {
 		}
 
 		@Override
-		public Class<MedicineProperty> getPropertyClass() {
-			return MedicineProperty.class;
+		public String getName() {
+			return MedicineProperty.class.getName();
 		}
 
 		@Override

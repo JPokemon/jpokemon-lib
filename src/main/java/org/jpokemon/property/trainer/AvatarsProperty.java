@@ -46,8 +46,8 @@ public class AvatarsProperty {
 
 	public static class Factory extends PropertyProvider<AvatarsProperty> {
 		@Override
-		public Class<AvatarsProperty> getPropertyClass() {
-			return AvatarsProperty.class;
+		public String getName() {
+			return AvatarsProperty.class.getName();
 		}
 
 		@Override

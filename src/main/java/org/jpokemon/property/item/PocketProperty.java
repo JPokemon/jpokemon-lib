@@ -43,8 +43,8 @@ public class PocketProperty {
 		}
 
 		@Override
-		public Class<PocketProperty> getPropertyClass() {
-			return PocketProperty.class;
+		public String getName() {
+			return PocketProperty.class.getName();
 		}
 
 		@Override
