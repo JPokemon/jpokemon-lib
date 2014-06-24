@@ -34,7 +34,6 @@ public class HappinessEvolution implements Evolution {
 		return species;
 	}
 
-	@Override
 	public void setSpecies(String species) {
 		this.species = species;
 	}

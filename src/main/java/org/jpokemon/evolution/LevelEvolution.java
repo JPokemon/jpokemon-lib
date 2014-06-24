@@ -34,7 +34,6 @@ public class LevelEvolution implements Evolution {
 		return this.species;
 	}
 
-	@Override
 	public void setSpecies(String species) {
 		this.species = species;
 	}
