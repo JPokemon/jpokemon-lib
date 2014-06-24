@@ -1,27 +1,21 @@
-package org.jpokemon.itemattribute;
+package org.jpokemon.property.item;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jpokemon.api.ItemAttributeFactory;
 import org.jpokemon.api.JPokemonException;
+import org.jpokemon.api.PropertyProvider;
 
 /**
- * Provides a possible item attribute describing qualities of berry items,
+ * Provides a possible property for items describing qualities of berry items,
  * including growth rate and flavors.
- * 
- * <p>
- * 
- * NOTE: {@link #equals} returns true when the object in question is the same
- * class as this. This is to prevent an Item from storing multiple
- * BerryAttributes.
  * 
  * @author atheriel@gmail.com
  * @author zach
  * 
  * @since 0.1
  */
-public class BerryAttribute {
+public class BerryProperty {
 	/** Indicates the time it takes to grow this berry */
 	protected String growthTime;
 
@@ -29,7 +23,7 @@ public class BerryAttribute {
 	protected Map<String, Integer> flavors;
 
 	/** Provides the default constructor */
-	public BerryAttribute() {
+	public BerryProperty() {
 	}
 
 	/** Gets the amount of time this berry requires to grow */
@@ -38,7 +32,7 @@ public class BerryAttribute {
 	}
 
 	/** Sets the amount of time this berry requires to grow */
-	public BerryAttribute setGrowthTime(String growthTime) {
+	public BerryProperty setGrowthTime(String growthTime) {
 		this.growthTime = growthTime;
 		return this;
 	}
@@ -53,10 +47,11 @@ public class BerryAttribute {
 	}
 
 	/** Sets the amount of bitter flavor for this berry */
-	public BerryAttribute setFlavor(String flavor, int strength) {
+	public BerryProperty setFlavor(String flavor, int strength) {
 		if (flavors == null) {
 			flavors = new HashMap<String, Integer>();
 		}
+
 		flavors.put(flavor, strength);
 		return this;
 	}
@@ -67,76 +62,60 @@ public class BerryAttribute {
 	}
 
 	/** Sets all flavor strengths for this berry */
-	public BerryAttribute setFlavors(Map<String, Integer> flavors) {
+	public BerryProperty setFlavors(Map<String, Integer> flavors) {
 		this.flavors = flavors;
 		return this;
 	}
 
-	@Override
-	public int hashCode() {
-		return this.getClass().hashCode();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		return o.getClass().equals(this.getClass());
-	}
-
 	/**
-	 * Provides an implementation of {@link ItemAttributeFactory} which can build
-	 * {@link BerryAttribute BerryAttributes}.
+	 * Provides an implementation of {@link PropertyProvider} which can build
+	 * {@link BerryProperty}s.
 	 * 
 	 * @author zach
 	 * 
 	 * @since 0.1
 	 */
-	public static class Factory extends ItemAttributeFactory {
+	public static class Provider extends PropertyProvider<BerryProperty> {
 		/** Provides the default constructor */
-		public Factory() {
+		public Provider() {
 		}
 
 		@Override
-		public Class<BerryAttribute> getItemAttributeClass() {
-			return BerryAttribute.class;
+		public Class<BerryProperty> getPropertyClass() {
+			return BerryProperty.class;
 		}
 
 		@Override
-		public Object buildItemAttribute(String optionString) throws JPokemonException {
-			BerryAttribute berryAttribute = new BerryAttribute();
+		public BerryProperty build(String optionString) throws JPokemonException {
+			BerryProperty berryProperty = new BerryProperty();
 
 			try {
 				String[] options = optionString.split(",");
 				int growthTime = Integer.parseInt(options[0]);
-				berryAttribute.setGrowthTime(growthTime + "");
+				berryProperty.setGrowthTime(growthTime + "");
 
 				for (int i = 1; i < options.length; i++) {
 					String[] flavorAssignment = options[i].split("=");
 					String flavor = flavorAssignment[0];
 					int strength = Integer.parseInt(flavorAssignment[1]);
-					berryAttribute.setFlavor(flavor, strength);
+					berryProperty.setFlavor(flavor, strength);
 				}
 			} catch (NumberFormatException e) {
-				// Too hard to actually tell why this failed
 				throw new JPokemonException(e);
 			} catch (IndexOutOfBoundsException e) {
-				// Too hard to actually tell why this failed
 				throw new JPokemonException(e);
 			}
 
-			return berryAttribute;
+			return berryProperty;
 		}
 
 		@Override
-		public String serializeItemAttribute(Object object) throws JPokemonException {
-			if (!(object instanceof BerryAttribute)) {
-				throw new JPokemonException("Expected berry item attribute object: " + object);
-			}
-
-			BerryAttribute berryAttribute = (BerryAttribute) object;
+		public String serialize(Object object) {
+			BerryProperty berryProperty = (BerryProperty) object;
 			StringBuilder stringBuilder = new StringBuilder();
 
-			stringBuilder.append(berryAttribute.getGrowthTime());
-			for (Map.Entry<String, Integer> flavorAssignment : berryAttribute.getFlavors().entrySet()) {
+			stringBuilder.append(berryProperty.getGrowthTime());
+			for (Map.Entry<String, Integer> flavorAssignment : berryProperty.getFlavors().entrySet()) {
 				stringBuilder.append(',');
 				stringBuilder.append(flavorAssignment.getKey());
 				stringBuilder.append('=');
