@@ -54,8 +54,9 @@ public class HappinessEvolution implements Evolution {
 		}
 
 		@Override
-		public Evolution buildEvolution(String options) throws JPokemonException {
+		public Evolution buildEvolution(String species, String options) throws JPokemonException {
 			HappinessEvolution happinessEvolution = new HappinessEvolution();
+			happinessEvolution.setSpecies(species);
 
 			try {
 				int happiness = Integer.parseInt(options);

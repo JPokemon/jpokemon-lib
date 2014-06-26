@@ -53,8 +53,9 @@ public class LevelEvolution implements Evolution {
 		}
 
 		@Override
-		public Evolution buildEvolution(String options) throws JPokemonException {
+		public Evolution buildEvolution(String species, String options) throws JPokemonException {
 			LevelEvolution levelEvolution = new LevelEvolution();
+			levelEvolution.setSpecies(species);
 
 			try {
 				int level = Integer.parseInt(options);

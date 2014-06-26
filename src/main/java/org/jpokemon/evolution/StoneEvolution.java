@@ -53,8 +53,9 @@ public class StoneEvolution implements Evolution {
 		}
 
 		@Override
-		public Evolution buildEvolution(String options) {
+		public Evolution buildEvolution(String species, String options) {
 			StoneEvolution stoneEvolution = new StoneEvolution();
+			stoneEvolution.setSpecies(species);
 			stoneEvolution.setType(options);
 			return stoneEvolution;
 		}
