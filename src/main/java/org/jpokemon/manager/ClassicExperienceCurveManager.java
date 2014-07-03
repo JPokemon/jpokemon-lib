@@ -1,4 +1,4 @@
-package org.jpokemon;
+package org.jpokemon.manager;
 
 import org.jpokemon.api.ExperienceCurve;
 import org.jpokemon.api.JPokemonException;

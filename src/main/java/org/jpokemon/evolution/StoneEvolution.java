@@ -70,5 +70,4 @@ public class StoneEvolution implements Evolution {
 			return stoneEvolution.getType();
 		}
 	}
-
 }

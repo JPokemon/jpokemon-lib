@@ -44,7 +44,7 @@ public class AvatarsProperty {
 		this.availableAvatars = availableAvatars;
 	}
 
-	public static class Factory extends PropertyProvider<AvatarsProperty> {
+	public static class Provider extends PropertyProvider<AvatarsProperty> {
 		@Override
 		public String getName() {
 			return AvatarsProperty.class.getName();

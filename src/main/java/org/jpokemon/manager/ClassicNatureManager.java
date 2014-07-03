@@ -1,4 +1,4 @@
-package org.jpokemon;
+package org.jpokemon.manager;
 
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Nature;
