@@ -81,6 +81,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 				if (TILESET_LAYER_NODE_NAME.equals(node.getNodeName())) {
 					String tilesetName = node.getAttributes().getNamedItem(TILESET_NAME_PROPERTY).getNodeValue();
 					tmxFileProperties.getTileSets().add(tilesetName);
+					entityZIndex++;
 				}
 				else if (TILE_LAYER_NODE_NAME.equals(node.getNodeName())) {
 					entityZIndex++;
@@ -89,7 +90,6 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 					tmxFileProperties.setEntityZIndex(entityZIndex);
 
 					// TODO - attach entities
-					System.out.println(node.getNodeName());
 
 					break;
 				}
