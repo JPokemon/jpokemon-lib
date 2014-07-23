@@ -47,14 +47,16 @@ public class WeatherEffect implements BattleEffect {
 
 	@Override
 	public void affect(Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer, Turn turn) {
-		if (--duration == 0) {
+		if (!battle.getNextRound().getBattleEffects().contains(this) && --duration > 0) {
+			battle.getNextRound().addBattleEffect(this);
+		}
+		else {
 			battle.removeBattleEffect(this);
 		}
 	}
 
 	@Override
 	public void affect(Round round) {
-		round.addBattleEffect(this);
 	}
 
 	@Override
@@ -70,8 +72,8 @@ public class WeatherEffect implements BattleEffect {
 	}
 
 	@Override
-	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer,
-			PokemonContainer pokemonContainer, Turn turn) {
+	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
+			Turn turn) {
 		if (!(battleEffect instanceof AttackDamageEffect)) {
 			return;
 		}

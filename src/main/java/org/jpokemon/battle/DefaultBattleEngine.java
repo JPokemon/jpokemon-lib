@@ -56,7 +56,9 @@ public class DefaultBattleEngine extends BattleEngine {
 	}
 
 	@Override
-	public void processRound(Battle battle, Round round) {
+	public void processRound(Battle battle) {
+		Round round = battle.getNextRound();
+		battle.setNextRound(new Round());
 		Map<PokemonContainer, TrainerContainer> pokemonContainerOwners = new HashMap<PokemonContainer, TrainerContainer>();
 
 		// Apply effects from the battle to the round
@@ -79,7 +81,8 @@ public class DefaultBattleEngine extends BattleEngine {
 				// build the pokemon container owners map
 				pokemonContainerOwners.put(pokemonContainer, trainerContainer);
 
-				// Apply effects of each pokemon container to its' skill containers
+				// Apply effects of each pokemon container to its' skill
+				// containers
 				for (SkillContainer skillContainer : pokemonContainer.getSkillContainers()) {
 					for (BattleEffect battleEffect : pokemonContainer.getBattleEffects()) {
 						battleEffect.affect(skillContainer);
@@ -118,15 +121,14 @@ public class DefaultBattleEngine extends BattleEngine {
 	}
 
 	protected List<Map.Entry<PokemonContainer, Turn>> getSortedTurnList(Round round) {
-		List<Map.Entry<PokemonContainer, Turn>> turnList = new ArrayList<Map.Entry<PokemonContainer, Turn>>(round
-				.getTurns().entrySet());
+		List<Map.Entry<PokemonContainer, Turn>> turnList = new ArrayList<Map.Entry<PokemonContainer, Turn>>(round.getTurns().entrySet());
 		Collections.sort(turnList, getTurnComparator());
 
 		return turnList;
 	}
 
-	protected List<BattleEffect> getSortedBattleEffects(Round round, TrainerContainer trainerContainer,
-			PokemonContainer pokemonContainer, Turn turn) {
+	protected List<BattleEffect> getSortedBattleEffects(Round round, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
+			Turn turn) {
 		List<BattleEffect> battleEffects = new ArrayList<BattleEffect>();
 
 		battleEffects.addAll(round.getBattleEffects());

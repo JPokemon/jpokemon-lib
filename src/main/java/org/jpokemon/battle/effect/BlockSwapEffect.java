@@ -2,14 +2,16 @@ package org.jpokemon.battle.effect;
 
 import org.jpokemon.api.Battle;
 import org.jpokemon.api.BattleEffect;
-import org.jpokemon.api.Move;
 import org.jpokemon.api.PokemonContainer;
 import org.jpokemon.api.Round;
 import org.jpokemon.api.SkillContainer;
 import org.jpokemon.api.TrainerContainer;
 import org.jpokemon.api.Turn;
 
-public class AccuracyEffect implements BattleEffect {
+public abstract class BlockSwapEffect implements BattleEffect {
+	public abstract boolean blocks(SwapEffect swapEffect, Battle battle, TrainerContainer trainerContainer,
+			PokemonContainer pokemonContainer, Turn turn);
+
 	@Override
 	public int getPriority() {
 		return 0;
@@ -21,7 +23,6 @@ public class AccuracyEffect implements BattleEffect {
 
 	@Override
 	public void affect(Round round) {
-		round.addBattleEffect(this);
 	}
 
 	@Override
@@ -39,16 +40,14 @@ public class AccuracyEffect implements BattleEffect {
 	@Override
 	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
 			Turn turn) {
-		if (!(battleEffect instanceof AttackDamageEffect)) {
+		if (!(battleEffect instanceof SwapEffect)) {
 			return;
 		}
 
-		AttackDamageEffect attackDamage = (AttackDamageEffect) battleEffect;
-		String moveName = attackDamage.getMove();
-		Move move = Move.manager.getByName(moveName);
+		SwapEffect swapEffect = (SwapEffect) battleEffect;
 
-		if (move.getAccuracy() < Math.random()) {
-			attackDamage.setAmount(0);
+		if (blocks(swapEffect, battle, trainerContainer, pokemonContainer, turn)) {
+			swapEffect.setCancelled(true);
 		}
 	}
 }

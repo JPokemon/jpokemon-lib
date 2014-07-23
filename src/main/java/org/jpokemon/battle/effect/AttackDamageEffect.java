@@ -61,7 +61,7 @@ public class AttackDamageEffect implements BattleEffect {
 
 	@Override
 	public void affect(Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer, Turn turn) {
-		PokemonContainer targetPokemonContainer = turn.getTarget();
+		PokemonContainer targetPokemonContainer = turn.getTarget().getPokemonContainers().get(turn.getTargetIndex());
 		Stat targetHealth = targetPokemonContainer.getPokemon().getStat("health");
 		targetHealth.setValue(targetHealth.getValue() - getAmount());
 	}
@@ -83,7 +83,7 @@ public class AttackDamageEffect implements BattleEffect {
 	}
 
 	@Override
-	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer,
-			PokemonContainer pokemonContainer, Turn turn) {
+	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
+			Turn turn) {
 	}
 }
