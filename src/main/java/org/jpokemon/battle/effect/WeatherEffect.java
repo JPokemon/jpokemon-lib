@@ -48,7 +48,7 @@ public class WeatherEffect implements BattleEffect {
 	@Override
 	public void affect(Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer, Turn turn) {
 		if (--duration == 0) {
-			battle.removeBattleEffects(this);
+			battle.removeBattleEffect(this);
 		}
 	}
 
