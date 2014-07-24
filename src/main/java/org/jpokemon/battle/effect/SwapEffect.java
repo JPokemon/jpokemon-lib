@@ -3,12 +3,10 @@ package org.jpokemon.battle.effect;
 import org.jpokemon.api.Battle;
 import org.jpokemon.api.BattleEffect;
 import org.jpokemon.api.PokemonContainer;
-import org.jpokemon.api.Round;
-import org.jpokemon.api.SkillContainer;
 import org.jpokemon.api.TrainerContainer;
 import org.jpokemon.api.Turn;
 
-public class SwapEffect implements BattleEffect {
+public class SwapEffect extends AbstractBattleEffect {
 	protected final PokemonContainer target;
 
 	protected boolean cancelled;
@@ -30,12 +28,6 @@ public class SwapEffect implements BattleEffect {
 	}
 
 	@Override
-	public int getPriority() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public void affect(Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer, Turn turn) {
 		if (isCancelled()) {
 			return;
@@ -50,22 +42,6 @@ public class SwapEffect implements BattleEffect {
 		for (BattleEffect battleEffect : target.getBattleEffects()) {
 			battleEffect.affect(battle, trainerContainer, pokemonContainer, turn);
 		}
-	}
-
-	@Override
-	public void affect(Round round) {
-	}
-
-	@Override
-	public void affect(TrainerContainer trainerContainer) {
-	}
-
-	@Override
-	public void affect(PokemonContainer pokemonContainer) {
-	}
-
-	@Override
-	public void affect(SkillContainer skillContainer) {
 	}
 
 	@Override

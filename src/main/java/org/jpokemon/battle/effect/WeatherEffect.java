@@ -4,12 +4,10 @@ import org.jpokemon.api.Battle;
 import org.jpokemon.api.BattleEffect;
 import org.jpokemon.api.Move;
 import org.jpokemon.api.PokemonContainer;
-import org.jpokemon.api.Round;
-import org.jpokemon.api.SkillContainer;
 import org.jpokemon.api.TrainerContainer;
 import org.jpokemon.api.Turn;
 
-public class WeatherEffect implements BattleEffect {
+public class WeatherEffect extends AbstractBattleEffect {
 	protected String type;
 
 	protected double damageModifier;
@@ -41,11 +39,6 @@ public class WeatherEffect implements BattleEffect {
 	}
 
 	@Override
-	public int getPriority() {
-		return 0;
-	}
-
-	@Override
 	public void affect(Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer, Turn turn) {
 		if (!battle.getNextRound().getBattleEffects().contains(this) && --duration > 0) {
 			battle.getNextRound().addBattleEffect(this);
@@ -53,22 +46,6 @@ public class WeatherEffect implements BattleEffect {
 		else {
 			battle.removeBattleEffect(this);
 		}
-	}
-
-	@Override
-	public void affect(Round round) {
-	}
-
-	@Override
-	public void affect(TrainerContainer trainerContainer) {
-	}
-
-	@Override
-	public void affect(PokemonContainer pokemonContainer) {
-	}
-
-	@Override
-	public void affect(SkillContainer skillContainer) {
 	}
 
 	@Override
