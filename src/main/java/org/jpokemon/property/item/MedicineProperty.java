@@ -1,7 +1,11 @@
 package org.jpokemon.property.item;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.PropertyProvider;
+import org.jpokemon.util.Options;
 
 /**
  * Provides a possible property for items describing qualities of medicine
@@ -78,18 +82,12 @@ public class MedicineProperty {
 		@Override
 		public MedicineProperty build(String optionString) throws JPokemonException {
 			MedicineProperty medicineProperty = new MedicineProperty();
+			Map<String, String> options = Options.parseMap(optionString);
 
 			try {
-				String[] options = optionString.split(",");
-
-				String stat = options[0];
-				medicineProperty.setStat(stat);
-
-				int strength = Integer.parseInt(options[1]);
-				medicineProperty.setStrength(strength);
-
-				boolean permanent = Boolean.parseBoolean(options[2]);
-				medicineProperty.setPermanent(permanent);
+				medicineProperty.setStat(options.get("stat"));
+				medicineProperty.setStrength(Integer.parseInt(options.get("strength")));
+				medicineProperty.setPermanent(Boolean.parseBoolean(options.get("permanent")));
 			} catch (NumberFormatException e) {
 				throw new JPokemonException(e);
 			} catch (IndexOutOfBoundsException e) {
@@ -102,15 +100,13 @@ public class MedicineProperty {
 		@Override
 		public String serialize(Object object) {
 			MedicineProperty medicineProperty = (MedicineProperty) object;
-			StringBuilder stringBuilder = new StringBuilder();
+			Map<String, String> options = new HashMap<String, String>();
 
-			stringBuilder.append(medicineProperty.getStat());
-			stringBuilder.append(',');
-			stringBuilder.append(medicineProperty.getStrength());
-			stringBuilder.append(',');
-			stringBuilder.append(medicineProperty.isPermanent());
+			options.put("stat", medicineProperty.getStat());
+			options.put("strength", Integer.toString(medicineProperty.getStrength()));
+			options.put("permanent", Boolean.toString(medicineProperty.isPermanent()));
 
-			return stringBuilder.toString();
+			return Options.serializeMap(options);
 		}
 	}
 }

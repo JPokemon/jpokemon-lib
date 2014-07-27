@@ -81,8 +81,7 @@ public class DefaultBattleEngine extends BattleEngine {
 				// build the pokemon container owners map
 				pokemonContainerOwners.put(pokemonContainer, trainerContainer);
 
-				// Apply effects of each pokemon container to its' skill
-				// containers
+				// Apply effects of pokemon containers to their skill containers
 				for (SkillContainer skillContainer : pokemonContainer.getSkillContainers()) {
 					for (BattleEffect battleEffect : pokemonContainer.getBattleEffects()) {
 						battleEffect.affect(skillContainer);

@@ -16,7 +16,7 @@ public class TypeBlockSwapEffect extends BlockSwapEffect {
 	@Override
 	public boolean blocks(SwapEffect swapEffect, Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
 			Turn turn) {
-		Species species = Species.manager.getByName(pokemonContainer.getPokemon().getSpecies());
+		Species species = Species.manager.getByName(pokemonContainer.getSpecies());
 		return species.getTypes().contains(type);
 	}
 }

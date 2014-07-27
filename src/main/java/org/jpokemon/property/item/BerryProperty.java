@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.PropertyProvider;
+import org.jpokemon.util.Options;
 
 /**
  * Provides a possible property for items describing qualities of berry items,
@@ -88,21 +89,22 @@ public class BerryProperty {
 		@Override
 		public BerryProperty build(String optionString) throws JPokemonException {
 			BerryProperty berryProperty = new BerryProperty();
+			Map<String, String> options = Options.parseMap(optionString);
 
 			try {
-				String[] options = optionString.split(",");
-				int growthTime = Integer.parseInt(options[0]);
-				berryProperty.setGrowthTime(growthTime + "");
+				berryProperty.setGrowthTime(options.get("growthtime"));
 
-				for (int i = 1; i < options.length; i++) {
-					String[] flavorAssignment = options[i].split("=");
-					String flavor = flavorAssignment[0];
-					int strength = Integer.parseInt(flavorAssignment[1]);
-					berryProperty.setFlavor(flavor, strength);
+				for (Map.Entry<String, String> entry : options.entrySet()) {
+					String flavor = entry.getKey();
+					String strength = entry.getValue();
+
+					if (flavor.equals("growthtime")) {
+						continue;
+					}
+
+					berryProperty.setFlavor(flavor, Integer.parseInt(strength));
 				}
 			} catch (NumberFormatException e) {
-				throw new JPokemonException(e);
-			} catch (IndexOutOfBoundsException e) {
 				throw new JPokemonException(e);
 			}
 
@@ -112,17 +114,15 @@ public class BerryProperty {
 		@Override
 		public String serialize(Object object) {
 			BerryProperty berryProperty = (BerryProperty) object;
-			StringBuilder stringBuilder = new StringBuilder();
+			Map<String, String> options = new HashMap<String, String>();
 
-			stringBuilder.append(berryProperty.getGrowthTime());
-			for (Map.Entry<String, Integer> flavorAssignment : berryProperty.getFlavors().entrySet()) {
-				stringBuilder.append(',');
-				stringBuilder.append(flavorAssignment.getKey());
-				stringBuilder.append('=');
-				stringBuilder.append(flavorAssignment.getValue());
+			for (Map.Entry<String, Integer> entry : berryProperty.getFlavors().entrySet()) {
+				options.put(entry.getKey(), Integer.toString(entry.getValue()));
 			}
 
-			return stringBuilder.toString();
+			options.put("growthtime", berryProperty.getGrowthTime());
+
+			return Options.serializeMap(options);
 		}
 	}
 }

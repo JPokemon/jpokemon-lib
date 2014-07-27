@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jpokemon.api.PropertyProvider;
+import org.jpokemon.util.Options;
 
 public class AvatarsProperty {
 	protected String avatar;
@@ -52,13 +53,11 @@ public class AvatarsProperty {
 
 		@Override
 		public AvatarsProperty build(String options) {
-			int firstCommaIndex = options.indexOf(',');
+			List<String> avatars = Options.parseArray(options);
 			AvatarsProperty avatarsPropery = new AvatarsProperty();
 
-			avatarsPropery.setAvatar(options.substring(0, firstCommaIndex));
-			for (String avatar : options.substring(firstCommaIndex + 1).split(",")) {
-				avatarsPropery.addAvailableAvatar(avatar);
-			}
+			avatarsPropery.setAvatar(avatars.get(0));
+			avatarsPropery.setAvailableAvatars(avatars);
 
 			return avatarsPropery;
 		}
@@ -66,8 +65,13 @@ public class AvatarsProperty {
 		@Override
 		public String serialize(Object object) {
 			AvatarsProperty avatarsProperty = (AvatarsProperty) object;
-			return avatarsProperty.getAvatar() + ','
-					+ avatarsProperty.getAvailableAvatars().toString().substring(1).replace("]", "");
+			List<String> availableAvatars = avatarsProperty.getAvailableAvatars();
+			availableAvatars.remove(avatarsProperty.getAvatar());
+			List<String> avatars = new ArrayList<String>();
+			avatars.add(avatarsProperty.getAvatar());
+			avatars.addAll(availableAvatars);
+
+			return Options.serializeArray(avatars);
 		}
 	}
 }
