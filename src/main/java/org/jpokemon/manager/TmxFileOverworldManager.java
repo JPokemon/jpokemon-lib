@@ -111,17 +111,4 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	public void unregister(String name) throws JPokemonException {
 		throw new JPokemonException("Removal of overworlds via TMX file deletion is unsupported");
 	}
-
-	/**
-	 * Initializes a new TmxFileOverworldManager as the {@link Overworld#manager}
-	 * 
-	 * @throws JPokemonException If the Ability.manager is already defined
-	 */
-	public static void init(String folderPath) throws JPokemonException {
-		if (Overworld.manager != null) {
-			throw new JPokemonException("Overworld.manager already defined");
-		}
-
-		Overworld.manager = new TmxFileOverworldManager(folderPath);
-	}
 }

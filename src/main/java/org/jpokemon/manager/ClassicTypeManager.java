@@ -1,8 +1,6 @@
 package org.jpokemon.manager;
 
-import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Type;
-import org.jpokemon.manager.SimpleTypeManager;
 
 /**
  * Provides a possible implementation of the {@link Type#manager}, using the 18
@@ -12,7 +10,7 @@ import org.jpokemon.manager.SimpleTypeManager;
  * 
  * @since 0.1
  */
-public class ClassicTypeManager extends SimpleTypeManager {
+public class ClassicTypeManager extends SimpleManager<Type> {
 	/** Indicates the name of the "???" type */
 	public static final String QUESTION_NAME = "???";
 
@@ -72,6 +70,7 @@ public class ClassicTypeManager extends SimpleTypeManager {
 
 	/** Provides the default constructor */
 	public ClassicTypeManager() {
+		super(Type.class);
 		register(new Type().setName(QUESTION_NAME));
 		register(new Type().setName(NORMAL_NAME).setNotVeryEffectiveAgainst(ROCK_NAME, STEEL_NAME)
 				.setIneffectiveAgainst(GHOST_NAME));
@@ -115,18 +114,5 @@ public class ClassicTypeManager extends SimpleTypeManager {
 				.setNotVeryEffectiveAgainst(FIRE_NAME, WATER_NAME, ELECTRIC_NAME, STEEL_NAME));
 		register(new Type().setName(FAIRY_NAME).setSuperEffectiveAgainst(DARK_NAME, DRAGON_NAME, FIGHTING_NAME)
 				.setNotVeryEffectiveAgainst(FIRE_NAME, POISON_NAME, STEEL_NAME));
-	}
-
-	/**
-	 * Initializes a new ClassicTypeManager as the {@link Type#manager}
-	 * 
-	 * @throws JPokemonException If the Type.manager is already defined
-	 */
-	public static void init() throws JPokemonException {
-		if (Type.manager != null) {
-			throw new JPokemonException("Type.manager is already defined");
-		}
-
-		Type.manager = new ClassicTypeManager();
 	}
 }

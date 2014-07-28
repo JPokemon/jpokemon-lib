@@ -2,7 +2,6 @@ package org.jpokemon.manager;
 
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Nature;
-import org.jpokemon.manager.SimpleNatureManager;
 
 /**
  * Provides a possible implementation of the {@link Nature#manager}, using the
@@ -13,7 +12,7 @@ import org.jpokemon.manager.SimpleNatureManager;
  * 
  * @since 0.1
  */
-public class ClassicNatureManager extends SimpleNatureManager {
+public class ClassicNatureManager extends SimpleManager<Nature> {
 	/** Indicates the name of the Bashful nature */
 	public static final String BASHFUL_NATURE = "Bashful";
 
@@ -90,6 +89,7 @@ public class ClassicNatureManager extends SimpleNatureManager {
 	public static final String NAIVE_NATURE = "Naive";
 
 	public ClassicNatureManager() {
+		super(Nature.class);
 		// Neutral Natures
 		register(new Nature().setName(BASHFUL_NATURE));
 		register(new Nature().setName(DOCILE_NATURE));
