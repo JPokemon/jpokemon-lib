@@ -48,8 +48,8 @@ public class StoneEvolution implements Evolution {
 	 */
 	public static class Factory extends EvolutionFactory {
 		@Override
-		public Class<StoneEvolution> getEvolutionClass() {
-			return StoneEvolution.class;
+		public String getName() {
+			return StoneEvolution.class.getName();
 		}
 
 		@Override

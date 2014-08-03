@@ -48,10 +48,9 @@ public class LevelEvolution implements Evolution {
 	 */
 	public static class Factory extends EvolutionFactory {
 		@Override
-		public Class<LevelEvolution> getEvolutionClass() {
-			return LevelEvolution.class;
+		public String getName() {
+			return LevelEvolution.class.getName();
 		}
-
 		@Override
 		public Evolution buildEvolution(String species, String options) throws JPokemonException {
 			LevelEvolution levelEvolution = new LevelEvolution();

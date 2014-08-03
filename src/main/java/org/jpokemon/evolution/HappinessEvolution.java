@@ -49,8 +49,8 @@ public class HappinessEvolution implements Evolution {
 	 */
 	public static class Factory extends EvolutionFactory {
 		@Override
-		public Class<HappinessEvolution> getEvolutionClass() {
-			return HappinessEvolution.class;
+		public String getName() {
+			return HappinessEvolution.class.getName();
 		}
 
 		@Override

@@ -18,8 +18,8 @@ public class MegaEvolution implements Evolution {
 
 	public static class Factory extends EvolutionFactory {
 		@Override
-		public Class<? extends Evolution> getEvolutionClass() {
-			return MegaEvolution.class;
+		public String getName() {
+			return MegaEvolution.class.getName();
 		}
 
 		@Override
