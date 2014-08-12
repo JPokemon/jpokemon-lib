@@ -42,11 +42,11 @@ public class Options {
 		return map;
 	}
 
-	public static String serializeMap(Map<String, String> map) {
+	public static String serializeMap(Map<String, ?> map) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append('{');
 
-		for (Map.Entry<String, String> entry : map.entrySet()) {
+		for (Map.Entry<String, ?> entry : map.entrySet()) {
 			stringBuilder.append(entry.getKey());
 			stringBuilder.append('=');
 			stringBuilder.append(entry.getValue());
