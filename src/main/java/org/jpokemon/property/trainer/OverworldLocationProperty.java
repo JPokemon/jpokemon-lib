@@ -8,6 +8,8 @@ public class OverworldLocationProperty {
 
 	protected int x, y;
 
+	protected String direction;
+
 	public OverworldLocationProperty() {
 	}
 
@@ -35,6 +37,14 @@ public class OverworldLocationProperty {
 		this.y = y;
 	}
 
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
 	public static class Provider extends PropertyProvider<OverworldLocationProperty> {
 		@Override
 		public String getName() {
@@ -48,13 +58,14 @@ public class OverworldLocationProperty {
 			property.setOverworld(args[0]);
 			property.setX(Integer.parseInt(args[1]));
 			property.setY(Integer.parseInt(args[2]));
+			property.setDirection(args[3]);
 			return property;
 		}
 
 		@Override
 		public String serialize(Object object) throws JPokemonException {
 			OverworldLocationProperty property = (OverworldLocationProperty) object;
-			return property.getOverworld() + ',' + property.getX() + ',' + property.getY();
+			return property.getOverworld() + ',' + property.getX() + ',' + property.getY() + ',' + property.getDirection();
 		}
 	}
 }
