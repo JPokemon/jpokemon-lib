@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Manager;
 import org.jpokemon.api.Overworld;
+import org.jpokemon.api.OverworldEntity;
 import org.jpokemon.property.overworld.TmxFileProperties;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -26,6 +28,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	private static final String TILE_LAYER_NODE_NAME = "layer";
 	private static final String OBJECT_LAYER_NODE_NAME = "objectgroup";
 	private static final String TILESET_LAYER_NODE_NAME = "tileset";
+	private static final String OBJECT_NODE_NAME = "object";
 	private static final String MAP_HEIGHT_PROPERTY = "height";
 	private static final String MAP_WIDTH_PROPERTY = "width";
 	private static final String MAP_TILE_SIZE_PROPERTY = "tileheight";
@@ -89,7 +92,49 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 				else if (OBJECT_LAYER_NODE_NAME.equals(node.getNodeName())) {
 					tmxFileProperties.setEntityZIndex(entityZIndex);
 
-					// TODO - attach entities
+					for (int j = 0; j < node.getChildNodes().getLength(); j++) {
+						Node objectNode = node.getChildNodes().item(j);
+
+						if (!OBJECT_NODE_NAME.equals(objectNode.getNodeName())) {
+							continue;
+						}
+
+						OverworldEntity entity = new OverworldEntity();
+
+						if (objectNode.getAttributes().getNamedItem("name") != null) {
+							entity.setName(objectNode.getAttributes().getNamedItem("name").getNodeValue());
+
+							if (ActionSet.manager != null) {
+								entity.setActionSets("interact", ActionSet.manager.getAll(entity.getName(), null));
+								entity.getActionSets("interact").addAll(ActionSet.manager.getAll(entity.getName(), "interact"));
+							}
+						}
+
+						if (objectNode.getAttributes().getNamedItem("type") != null) {
+							entity.setMovement(objectNode.getAttributes().getNamedItem("type").getNodeValue());
+						}
+						else {
+							entity.setMovement(org.jpokemon.movement.Solid.class.getName());
+						}
+
+						int xPixel = Integer.parseInt(objectNode.getAttributes().getNamedItem("x").getNodeValue());
+						int yPixel = Integer.parseInt(objectNode.getAttributes().getNamedItem("y").getNodeValue());
+						int xTile = xPixel / tmxFileProperties.getTileSize();
+						int yTile = yPixel / tmxFileProperties.getTileSize();
+						int xPixelOffset = xPixel - xTile * tmxFileProperties.getTileSize();
+						int yPixelOffset = yPixel - yTile * tmxFileProperties.getTileSize();
+						int pixelWidth = xPixelOffset
+								+ Integer.parseInt(objectNode.getAttributes().getNamedItem("width").getNodeValue());
+						int pixelHeight = yPixelOffset
+								+ Integer.parseInt(objectNode.getAttributes().getNamedItem("height").getNodeValue());
+
+						entity.setX(xTile);
+						entity.setY(yTile);
+						entity.setWidth((int) Math.ceil(pixelWidth / tmxFileProperties.getTileSize()) + 1);
+						entity.setHeight((int) Math.ceil(pixelHeight / tmxFileProperties.getTileSize()) + 1);
+
+						overworld.addEntity(entity);
+					}
 
 					break;
 				}
