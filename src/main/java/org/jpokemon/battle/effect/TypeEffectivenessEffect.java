@@ -16,8 +16,8 @@ public class TypeEffectivenessEffect extends AbstractBattleEffect {
 	}
 
 	@Override
-	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer, PokemonContainer pokemonContainer,
-			Turn turn) {
+	public void affect(BattleEffect battleEffect, Battle battle, TrainerContainer trainerContainer,
+			PokemonContainer pokemonContainer, Turn turn) {
 		if (!(battleEffect instanceof AttackDamageEffect)) {
 			return;
 		}
@@ -28,13 +28,13 @@ public class TypeEffectivenessEffect extends AbstractBattleEffect {
 		Species targetPokemonSpecies = Species.manager.getByName(targetPokemonContainer.getPokemon().getSpecies());
 
 		for (String targetType : targetPokemonSpecies.getTypes()) {
-			if (attackType.isSuperEffectiveAgainst(targetType)) {
+			if ("super".equals(attackType.getEffectiveness(targetType))) {
 				attackDamage.setAmount((int) (attackDamage.getAmount() * 1.5));
 			}
-			else if (attackType.isNotVeryEffectiveAgainst(targetType)) {
+			else if ("not very".equals(attackType.getEffectiveness(targetType))) {
 				attackDamage.setAmount((int) (attackDamage.getAmount() * 0.5));
 			}
-			else if (attackType.isIneffectiveAgainst(targetType)) {
+			else if ("ineffective".equals(attackType.getEffectiveness(targetType))) {
 				attackDamage.setAmount(0);
 			}
 		}
