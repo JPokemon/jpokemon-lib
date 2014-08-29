@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Options {
 	public static List<String> parseArray(String string) {
-		string = string.replaceAll("[", "");
-		string = string.replaceAll("]", "");
+		string = string.replaceAll("\\[", "");
+		string = string.replaceAll("\\]", "");
 		return Arrays.asList(string.split(","));
 	}
 
