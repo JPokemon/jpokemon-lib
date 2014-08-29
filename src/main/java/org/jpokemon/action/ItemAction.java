@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.jpokemon.api.Action;
 import org.jpokemon.api.ActionFactory;
+import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
+import org.jpokemon.api.Overworld;
+import org.jpokemon.api.OverworldEntity;
 import org.jpokemon.api.PokemonTrainer;
 import org.jpokemon.util.Options;
 
@@ -31,7 +34,7 @@ public class ItemAction implements Action {
 	}
 
 	@Override
-	public void execute(PokemonTrainer pokemonTrainer) throws JPokemonException {
+	public void execute(Overworld overworld, OverworldEntity entity, ActionSet actionSet, PokemonTrainer pokemonTrainer) {
 		pokemonTrainer.setItemQuantity(getItem(), pokemonTrainer.getItemQuantity(getItem()) + getAmount());
 	}
 
