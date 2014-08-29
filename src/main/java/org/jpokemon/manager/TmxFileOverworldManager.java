@@ -1,16 +1,22 @@
 package org.jpokemon.manager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.jpokemon.api.Action;
+import org.jpokemon.api.ActionFactory;
 import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Manager;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
+import org.jpokemon.api.Requirement;
+import org.jpokemon.api.RequirementFactory;
 import org.jpokemon.property.overworld.TmxFileProperties;
+import org.jpokemon.util.Options;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -29,6 +35,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	private static final String OBJECT_LAYER_NODE_NAME = "objectgroup";
 	private static final String TILESET_LAYER_NODE_NAME = "tileset";
 	private static final String OBJECT_NODE_NAME = "object";
+	private static final String PROPERTY_NODE_NAME = "property";
 	private static final String MAP_HEIGHT_PROPERTY = "height";
 	private static final String MAP_WIDTH_PROPERTY = "width";
 	private static final String MAP_TILE_SIZE_PROPERTY = "tileheight";
@@ -60,6 +67,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	@Override
 	public Overworld getByName(String name) throws JPokemonException {
 		Overworld overworld = new Overworld();
+		overworld.setName(name);
 		TmxFileProperties tmxFileProperties = new TmxFileProperties();
 		overworld.addProperty(tmxFileProperties);
 
@@ -103,18 +111,117 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 
 						if (objectNode.getAttributes().getNamedItem("name") != null) {
 							entity.setName(objectNode.getAttributes().getNamedItem("name").getNodeValue());
-
-							if (ActionSet.manager != null) {
-								entity.setActionSets("interact", ActionSet.manager.getAll(entity.getName(), null));
-								entity.getActionSets("interact").addAll(ActionSet.manager.getAll(entity.getName(), "interact"));
-							}
 						}
 
 						if (objectNode.getAttributes().getNamedItem("type") != null) {
-							entity.setMovement(objectNode.getAttributes().getNamedItem("type").getNodeValue());
+							String objectType = objectNode.getAttributes().getNamedItem("type").getNodeValue();
+							entity.setMovement(objectType);
 						}
 						else {
 							entity.setMovement(org.jpokemon.movement.Solid.class.getName());
+						}
+
+						List<String> triggers = new ArrayList<String>();
+
+						if (objectNode.getChildNodes().getLength() > 0) {
+							ActionSet anonymousActionSet = new ActionSet();
+							Node objectPropertiesNode = objectNode.getChildNodes().item(1);
+
+							for (int k = 0; k < objectPropertiesNode.getChildNodes().getLength(); k++) {
+								Node objectPropertyNode = objectPropertiesNode.getChildNodes().item(k);
+
+								if (!PROPERTY_NODE_NAME.equals(objectPropertyNode.getNodeName())) {
+									continue;
+								}
+
+								String objectPropertyName = objectPropertyNode.getAttributes().getNamedItem("name").getNodeValue();
+								String objectPropertyValue = objectPropertyNode.getAttributes().getNamedItem("value").getNodeValue();
+
+								if ("triggers".equals(objectPropertyName)) {
+									List<String> triggersList = Options.parseArray(objectPropertyValue);
+
+									if (triggersList.isEmpty()) {
+										triggers.add(null);
+										triggers.add("interact");
+									}
+
+									for (String newTrigger : triggersList) {
+										triggers.add(newTrigger);
+									}
+								}
+								else if ("actions".equals(objectPropertyName)) {
+									List<String> actionDatas = Options.parseArray(objectPropertyValue);
+
+									for (String ad : actionDatas) {
+										String[] actionData = ad.split(":");
+										String actionName = actionData[0];
+										String actionOptions = actionData[1];
+
+										ActionFactory actionFactory = ActionFactory.manager.getByName(actionName);
+										Action action = actionFactory.buildAction(actionOptions);
+										anonymousActionSet.addAction(action);
+									}
+								}
+								else if ("requirements".equals(objectPropertyName)) {
+									List<String> requirementDatas = Options.parseArray(objectPropertyValue);
+
+									for (String rd : requirementDatas) {
+										String[] requirementData = rd.split(":");
+										String requirementName = requirementData[0];
+										String requirementOptions = requirementData[1];
+
+										RequirementFactory requirementFactory = RequirementFactory.manager.getByName(requirementName);
+										Requirement requirement = requirementFactory.buildRequirement(requirementOptions);
+										anonymousActionSet.addRequirement(requirement);
+									}
+								}
+							}
+
+							for (String trigger : triggers) {
+								entity.getActionSets(trigger).add(anonymousActionSet);
+							}
+						}
+
+						if (ActionSet.manager != null) {
+							// do not name people the same as maps
+							for (String trigger : triggers) {
+								entity.getActionSets(trigger).addAll(ActionSet.manager.getAll(entity.getName(), trigger));
+							}
+						}
+
+						if (objectNode.getAttributes().getNamedItem("actions") != null) {
+							List<String> actionDatas = Options.parseArray(objectNode.getAttributes().getNamedItem("actions")
+									.getNodeValue());
+							ActionSet anonymousActionSet = new ActionSet();
+
+							for (String ad : actionDatas) {
+								String[] actionData = ad.split(":");
+								String actionName = actionData[0];
+								String actionOptions = actionData[1];
+
+								ActionFactory actionFactory = ActionFactory.manager.getByName(actionName);
+								Action action = actionFactory.buildAction(actionOptions);
+								anonymousActionSet.addAction(action);
+							}
+
+							if (objectNode.getAttributes().getNamedItem("requirements") != null) {
+								List<String> requirementDatas = Options.parseArray(objectNode.getAttributes().getNamedItem("actions")
+										.getNodeValue());
+
+								for (String rd : requirementDatas) {
+									String[] requirementData = rd.split(":");
+									String requirementName = requirementData[0];
+									String requirementOptions = requirementData[1];
+
+									RequirementFactory requirementFactory = RequirementFactory.manager.getByName(requirementName);
+									Requirement requirement = requirementFactory.buildRequirement(requirementOptions);
+									anonymousActionSet.addRequirement(requirement);
+								}
+							}
+
+							for (String trigger : triggers) {
+								entity.getActionSets(trigger).add(anonymousActionSet);
+							}
 						}
 
 						int xPixel = Integer.parseInt(objectNode.getAttributes().getNamedItem("x").getNodeValue());
