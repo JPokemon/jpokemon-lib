@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jpokemon.api.Action;
-import org.jpokemon.api.ActionFactory;
-import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
@@ -13,7 +11,7 @@ import org.jpokemon.api.Pokemon;
 import org.jpokemon.api.PokemonTrainer;
 import org.jpokemon.util.Options;
 
-public class PokemonAction implements Action {
+public class GiveSpecies extends Action {
 	protected String species;
 
 	protected boolean giving = true;
@@ -35,10 +33,10 @@ public class PokemonAction implements Action {
 	}
 
 	@Override
-	public void execute(Overworld overworld, OverworldEntity entity, ActionSet actionSet, PokemonTrainer pokemonTrainer) {
+	public void execute(Overworld overworld, OverworldEntity entity, PokemonTrainer pokemonTrainer) {
 		if (isGiving()) {
 			// TODO PokemonFactory
-			Pokemon pokemon = new Pokemon();
+			Pokemon pokemon = Pokemon.manager.create();
 			pokemon.setSpecies(getSpecies());
 
 			pokemonTrainer.addPokemon(pokemon);
@@ -58,16 +56,16 @@ public class PokemonAction implements Action {
 		}
 	}
 
-	public static class Factory extends ActionFactory {
+	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public String getName() {
-			return PokemonAction.class.getName();
+		public Class<? extends Action> getOutputClass() {
+			return GiveSpecies.class;
 		}
 
 		@Override
-		public Action buildAction(String o) throws JPokemonException {
+		public Action construct(String o) throws JPokemonException {
 			Map<String, String> options = Options.parseMap(o);
-			PokemonAction pokemonAction = new PokemonAction();
+			GiveSpecies pokemonAction = new GiveSpecies();
 
 			pokemonAction.setSpecies(options.get("species"));
 
@@ -79,8 +77,8 @@ public class PokemonAction implements Action {
 		}
 
 		@Override
-		public String serializeAction(Action action) throws JPokemonException {
-			PokemonAction pokemonAction = (PokemonAction) action;
+		public String destruct(Action action) throws JPokemonException {
+			GiveSpecies pokemonAction = (GiveSpecies) action;
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("giving", pokemonAction.isGiving());

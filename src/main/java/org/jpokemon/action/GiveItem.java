@@ -4,15 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jpokemon.api.Action;
-import org.jpokemon.api.ActionFactory;
-import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
 import org.jpokemon.api.PokemonTrainer;
 import org.jpokemon.util.Options;
 
-public class ItemAction implements Action {
+public class GiveItem extends Action {
 	protected String item;
 
 	protected int amount;
@@ -34,37 +32,37 @@ public class ItemAction implements Action {
 	}
 
 	@Override
-	public void execute(Overworld overworld, OverworldEntity entity, ActionSet actionSet, PokemonTrainer pokemonTrainer) {
+	public void execute(Overworld overworld, OverworldEntity entity, PokemonTrainer pokemonTrainer) {
 		pokemonTrainer.setItemQuantity(getItem(), pokemonTrainer.getItemQuantity(getItem()) + getAmount());
 	}
 
-	public static class Factory extends ActionFactory {
+	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public String getName() {
-			return ItemAction.class.getName();
+		public Class<? extends Action> getOutputClass() {
+			return GiveItem.class;
 		}
 
 		@Override
-		public Action buildAction(String o) throws JPokemonException {
+		public Action construct(String o) throws JPokemonException {
 			Map<String, String> options = Options.parseMap(o);
-			ItemAction itemAction = new ItemAction();
+			GiveItem a = new GiveItem();
 
-			itemAction.setItem(options.get("item"));
+			a.setItem(options.get("item"));
 
 			if (options.containsKey("amount")) {
-				itemAction.setAmount(Integer.parseInt(options.get("amount")));
+				a.setAmount(Integer.parseInt(options.get("amount")));
 			}
 
-			return itemAction;
+			return a;
 		}
 
 		@Override
-		public String serializeAction(Action action) throws JPokemonException {
-			ItemAction itemAction = (ItemAction) action;
+		public String destruct(Action action) throws JPokemonException {
+			GiveItem a = (GiveItem) action;
 
 			Map<String, Object> options = new HashMap<String, Object>();
-			options.put("item", itemAction.getItem());
-			options.put("amount", itemAction.getAmount());
+			options.put("item", a.getItem());
+			options.put("amount", a.getAmount());
 
 			return Options.serializeMap(options);
 		}

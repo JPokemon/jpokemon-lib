@@ -56,7 +56,7 @@ public class WeatherEffect extends AbstractBattleEffect {
 		}
 
 		AttackDamageEffect attackDamage = (AttackDamageEffect) battleEffect;
-		Move move = Move.manager.getByName(attackDamage.getMove());
+		Move move = Move.manager.get(attackDamage.getMove());
 
 		if (move.getType().equals(type)) {
 			attackDamage.setAmount((int) (attackDamage.getAmount() * getDamageModifier()));

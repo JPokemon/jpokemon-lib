@@ -7,9 +7,9 @@ import org.jpokemon.api.Stat;
 
 public class Calculator {
 	public static int stat(Pokemon pokemon, String statName) {
-		Species species = Species.manager.getByName(pokemon.getSpecies());
+		Species species = Species.manager.get(pokemon.getSpecies());
 		Stat stat = pokemon.getStat(statName);
-		Nature nature = Nature.manager.getByName(pokemon.getNature());
+		Nature nature = Nature.manager.get(pokemon.getNature());
 
 		int base = species.getBaseStat(statName);
 		int ev = stat.getEv();

@@ -24,8 +24,8 @@ public class TypeEffectivenessEffect extends AbstractBattleEffect {
 
 		AttackDamageEffect attackDamage = (AttackDamageEffect) battleEffect;
 		PokemonContainer targetPokemonContainer = turn.getTarget().getPokemonContainers().get(turn.getTargetIndex());
-		Type attackType = Type.manager.getByName(attackDamage.getType());
-		Species targetPokemonSpecies = Species.manager.getByName(targetPokemonContainer.getPokemon().getSpecies());
+		Type attackType = Type.manager.get(attackDamage.getType());
+		Species targetPokemonSpecies = Species.manager.get(targetPokemonContainer.getPokemon().getSpecies());
 
 		for (String targetType : targetPokemonSpecies.getTypes()) {
 			if ("super".equals(attackType.getEffectiveness(targetType))) {

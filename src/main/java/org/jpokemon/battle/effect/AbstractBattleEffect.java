@@ -8,7 +8,7 @@ import org.jpokemon.api.SkillContainer;
 import org.jpokemon.api.TrainerContainer;
 import org.jpokemon.api.Turn;
 
-public class AbstractBattleEffect implements BattleEffect {
+public class AbstractBattleEffect extends BattleEffect {
 	@Override
 	public int getPriority() {
 		return 0;

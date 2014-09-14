@@ -23,7 +23,7 @@ public class AccuracyEffect extends AbstractBattleEffect {
 
 		AttackDamageEffect attackDamage = (AttackDamageEffect) battleEffect;
 		String moveName = attackDamage.getMove();
-		Move move = Move.manager.getByName(moveName);
+		Move move = Move.manager.get(moveName);
 
 		if (move.getAccuracy() < Math.random()) {
 			attackDamage.setCancelled(true);

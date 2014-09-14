@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.PropertyProvider;
 import org.jpokemon.util.Options;
 
 public class TrainerAffinity {
@@ -40,14 +39,14 @@ public class TrainerAffinity {
 		this.scores = scores;
 	}
 
-	public static class Provider extends PropertyProvider<TrainerAffinity> {
+	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public String getName() {
-			return TrainerAffinity.class.getName();
+		public Class<? extends Object> getOutputClass() {
+			return TrainerAffinity.class;
 		}
 
 		@Override
-		public TrainerAffinity build(String o) throws JPokemonException {
+		public Object construct(String o) throws JPokemonException {
 			TrainerAffinity trainerAffinity = new TrainerAffinity();
 
 			for (Map.Entry<String, String> option : Options.parseMap(o).entrySet()) {
@@ -60,7 +59,7 @@ public class TrainerAffinity {
 		}
 
 		@Override
-		public String serialize(Object object) throws JPokemonException {
+		public String destruct(Object object) throws JPokemonException {
 			TrainerAffinity trainerAffinity = (TrainerAffinity) object;
 			return Options.serializeMap(trainerAffinity.getScores());
 		}

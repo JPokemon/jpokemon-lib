@@ -11,7 +11,7 @@ import org.jpokemon.api.ExperienceCurve;
  */
 public class FastExperienceCurve extends ExperienceCurve {
 	@Override
-	public String getName() {
+	public String getId() {
 		return getClass().getName();
 	}
 

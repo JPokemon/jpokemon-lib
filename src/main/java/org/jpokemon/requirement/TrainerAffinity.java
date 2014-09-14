@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jpokemon.api.JPokemonException;
+import org.jpokemon.api.Pokemon;
 import org.jpokemon.api.PokemonTrainer;
 import org.jpokemon.api.Requirement;
-import org.jpokemon.api.RequirementFactory;
-import org.jpokemon.property.trainer.TrainerAffinity;
 import org.jpokemon.util.Options;
 
-public class AffinityRequirement implements Requirement {
-
+public class TrainerAffinity extends Requirement {
 	protected int totalScore;
 
 	protected Map<String, Integer> scores = new HashMap<String, Integer>();
@@ -45,8 +43,8 @@ public class AffinityRequirement implements Requirement {
 	}
 
 	@Override
-	public boolean isSatisfied(PokemonTrainer pokemonTrainer) {
-		TrainerAffinity trainerAffinity = pokemonTrainer.getProperty(TrainerAffinity.class);
+	public boolean test(PokemonTrainer pokemonTrainer, Pokemon pokemon) {
+		org.jpokemon.property.trainer.TrainerAffinity trainerAffinity = pokemonTrainer.getProperty(org.jpokemon.property.trainer.TrainerAffinity.class);
 
 		if (getTotalScore() > 0 && getTotalScore() > trainerAffinity.getTotalScore()) {
 			return false;
@@ -61,15 +59,15 @@ public class AffinityRequirement implements Requirement {
 		return true;
 	}
 
-	public static class Factory extends RequirementFactory {
+	public static class Builder implements org.jpokemon.api.Builder<Requirement> {
 		@Override
-		public String getName() {
-			return AffinityRequirement.class.getName();
+		public Class<? extends Requirement> getOutputClass() {
+			return TrainerAffinity.class;
 		}
 
 		@Override
-		public Requirement buildRequirement(String o) throws JPokemonException {
-			AffinityRequirement affinityRequirement = new AffinityRequirement();
+		public Requirement construct(String o) throws JPokemonException {
+			TrainerAffinity affinityRequirement = new TrainerAffinity();
 
 			for (Map.Entry<String, String> option : Options.parseMap(o).entrySet()) {
 				String key = option.getKey();
@@ -87,7 +85,7 @@ public class AffinityRequirement implements Requirement {
 		}
 
 		@Override
-		public String serializeRequirement(Requirement requirement) throws JPokemonException {
+		public String destruct(Requirement requirement) throws JPokemonException {
 			// TODO Auto-generated method stub
 			return null;
 		}

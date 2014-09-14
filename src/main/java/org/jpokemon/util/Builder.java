@@ -16,7 +16,7 @@ import org.jpokemon.api.Stat;
 
 public final class Builder {
 	public static final Pokemon pokemonWithSpeciesAndLevel(String speciesName, int level) {
-		return pokemonWithSpeciesAndLevel(Species.manager.getByName(speciesName), level);
+		return pokemonWithSpeciesAndLevel(Species.manager.get(speciesName), level);
 	}
 
 	public static final Pokemon pokemonWithSpeciesAndLevel(Species species, int level) {
@@ -55,7 +55,7 @@ public final class Builder {
 		}
 
 		for (String moveName : moveNames) {
-			Move move = Move.manager.getByName(moveName);
+			Move move = Move.manager.get(moveName);
 			Skill skill = new Skill();
 			skill.setMove(moveName);
 			skill.setCurrentPP(move.getPP());

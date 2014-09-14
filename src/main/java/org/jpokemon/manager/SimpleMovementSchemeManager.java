@@ -2,14 +2,12 @@ package org.jpokemon.manager;
 
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.MovementScheme;
-import org.jpokemon.movement.Hollow;
-import org.jpokemon.movement.Solid;
+import org.jpokemon.movement.HollowBuilder;
+import org.jpokemon.movement.SolidBuilder;
 
-public class SimpleMovementSchemeManager extends SimpleManager<MovementScheme> {
+public class SimpleMovementSchemeManager extends SimpleBuildersManager<MovementScheme> {
 	public SimpleMovementSchemeManager() throws JPokemonException {
-		super(MovementScheme.class);
-
-		register(new Solid());
-		register(new Hollow());
+		register(new SolidBuilder());
+		register(new HollowBuilder());
 	}
 }

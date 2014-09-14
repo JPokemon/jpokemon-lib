@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jpokemon.api.Action;
-import org.jpokemon.api.ActionFactory;
-import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
@@ -13,8 +11,7 @@ import org.jpokemon.api.PokemonTrainer;
 import org.jpokemon.property.trainer.TrainerAffinity;
 import org.jpokemon.util.Options;
 
-public class AffinityAction implements Action {
-
+public class ChangeAffinity extends Action {
 	protected Map<String, Integer> scores = new HashMap<String, Integer>();
 
 	public int getScore(String type) {
@@ -38,7 +35,7 @@ public class AffinityAction implements Action {
 	}
 
 	@Override
-	public void execute(Overworld overworld, OverworldEntity entity, ActionSet actionSet, PokemonTrainer pokemonTrainer) {
+	public void execute(Overworld overworld, OverworldEntity entity, PokemonTrainer pokemonTrainer) {
 		TrainerAffinity trainerAffinity = pokemonTrainer.getProperty(TrainerAffinity.class);
 
 		for (Map.Entry<String, Integer> scoreBonus : getScores().entrySet()) {
@@ -47,15 +44,15 @@ public class AffinityAction implements Action {
 		}
 	}
 
-	public static class Factory extends ActionFactory {
+	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public String getName() {
-			return AffinityAction.class.getName();
+		public Class<? extends Action> getOutputClass() {
+			return ChangeAffinity.class;
 		}
 
 		@Override
-		public Action buildAction(String options) throws JPokemonException {
-			AffinityAction affinityAction = new AffinityAction();
+		public Action construct(String options) throws JPokemonException {
+			ChangeAffinity affinityAction = new ChangeAffinity();
 
 			for (Map.Entry<String, String> option : Options.parseMap(options).entrySet()) {
 				affinityAction.setScore(option.getKey(), Integer.parseInt(option.getValue()));
@@ -65,8 +62,8 @@ public class AffinityAction implements Action {
 		}
 
 		@Override
-		public String serializeAction(Action action) throws JPokemonException {
-			AffinityAction affinityAction = (AffinityAction) action;
+		public String destruct(Action action) throws JPokemonException {
+			ChangeAffinity affinityAction = (ChangeAffinity) action;
 			return Options.serializeMap(affinityAction.getScores());
 		}
 	}

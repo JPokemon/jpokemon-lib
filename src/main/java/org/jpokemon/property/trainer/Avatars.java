@@ -3,10 +3,9 @@ package org.jpokemon.property.trainer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jpokemon.api.PropertyProvider;
 import org.jpokemon.util.Options;
 
-public class AvatarsProperty {
+public class Avatars {
 	protected String avatar;
 
 	protected List<String> availableAvatars;
@@ -20,24 +19,17 @@ public class AvatarsProperty {
 	}
 
 	public void addAvailableAvatar(String avatar) {
-		if (availableAvatars == null) {
-			availableAvatars = new ArrayList<String>();
-		}
-
-		availableAvatars.add(avatar);
+		getAvailableAvatars().add(avatar);
 	}
 
 	public void removeAvailableAvatar(String avatar) {
-		if (availableAvatars != null) {
-			availableAvatars.remove(avatar);
-		}
+		getAvailableAvatars().remove(avatar);
 	}
 
 	public List<String> getAvailableAvatars() {
 		if (availableAvatars == null) {
 			availableAvatars = new ArrayList<String>();
 		}
-
 		return availableAvatars;
 	}
 
@@ -45,16 +37,16 @@ public class AvatarsProperty {
 		this.availableAvatars = availableAvatars;
 	}
 
-	public static class Provider extends PropertyProvider<AvatarsProperty> {
+	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public String getName() {
-			return AvatarsProperty.class.getName();
+		public Class<? extends Object> getOutputClass() {
+			return Avatars.class;
 		}
 
 		@Override
-		public AvatarsProperty build(String options) {
+		public Object construct(String options) {
 			List<String> avatars = Options.parseArray(options);
-			AvatarsProperty avatarsPropery = new AvatarsProperty();
+			Avatars avatarsPropery = new Avatars();
 
 			avatarsPropery.setAvatar(avatars.get(0));
 			avatarsPropery.setAvailableAvatars(avatars);
@@ -63,8 +55,8 @@ public class AvatarsProperty {
 		}
 
 		@Override
-		public String serialize(Object object) {
-			AvatarsProperty avatarsProperty = (AvatarsProperty) object;
+		public String destruct(Object object) {
+			Avatars avatarsProperty = (Avatars) object;
 			List<String> availableAvatars = avatarsProperty.getAvailableAvatars();
 			availableAvatars.remove(avatarsProperty.getAvatar());
 			List<String> avatars = new ArrayList<String>();

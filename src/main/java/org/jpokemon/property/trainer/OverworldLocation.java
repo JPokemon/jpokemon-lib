@@ -1,16 +1,15 @@
 package org.jpokemon.property.trainer;
 
 import org.jpokemon.api.JPokemonException;
-import org.jpokemon.api.PropertyProvider;
 
-public class OverworldLocationProperty {
+public class OverworldLocation {
 	protected String overworld;
 
 	protected int x, y;
 
 	protected String direction;
 
-	public OverworldLocationProperty() {
+	public OverworldLocation() {
 	}
 
 	public String getOverworld() {
@@ -45,16 +44,16 @@ public class OverworldLocationProperty {
 		this.direction = direction;
 	}
 
-	public static class Provider extends PropertyProvider<OverworldLocationProperty> {
+	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public String getName() {
-			return OverworldLocationProperty.class.getName();
+		public Class<? extends Object> getOutputClass() {
+			return OverworldLocation.class;
 		}
 
 		@Override
-		public OverworldLocationProperty build(String options) throws JPokemonException {
+		public Object construct(String options) throws JPokemonException {
 			String[] args = options.split(",");
-			OverworldLocationProperty property = new OverworldLocationProperty();
+			OverworldLocation property = new OverworldLocation();
 			property.setOverworld(args[0]);
 			property.setX(Integer.parseInt(args[1]));
 			property.setY(Integer.parseInt(args[2]));
@@ -63,8 +62,8 @@ public class OverworldLocationProperty {
 		}
 
 		@Override
-		public String serialize(Object object) throws JPokemonException {
-			OverworldLocationProperty property = (OverworldLocationProperty) object;
+		public String destruct(Object object) throws JPokemonException {
+			OverworldLocation property = (OverworldLocation) object;
 			return property.getOverworld() + ',' + property.getX() + ',' + property.getY() + ',' + property.getDirection();
 		}
 	}
