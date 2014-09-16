@@ -2,13 +2,13 @@ package org.jpokemon.movement;
 
 import org.jpokemon.api.MovementScheme;
 
-public class Accelerator extends MovementScheme {
+public class Blocker extends MovementScheme {
 	protected String direction;
 
-	public Accelerator() {
+	public Blocker() {
 	}
 
-	public Accelerator(String direction) {
+	public Blocker(String direction) {
 		setDirection(direction);
 	}
 
@@ -16,36 +16,33 @@ public class Accelerator extends MovementScheme {
 		return direction;
 	}
 
-	public Accelerator setDirection(String direction) {
+	public void setDirection(String direction) {
 		this.direction = direction;
-		return this;
 	}
 
 	@Override
 	public String getNextMove(String move) {
-		// allow comparison with ==
-		if (move.equals(direction)) {
-			return move;
+		if (move.equals(getDirection())) {
+			return null;
 		}
-
-		return direction;
+		return move;
 	}
 
 	public static class Builder implements org.jpokemon.api.Builder<MovementScheme> {
 		@Override
 		public String getId() {
-			return Accelerator.class.getName();
+			return Blocker.class.getName();
 		}
 
 		@Override
 		public MovementScheme construct(String options) {
-			Accelerator ms = new Accelerator(options);
+			Blocker ms = new Blocker(options);
 			return ms;
 		}
 
 		@Override
 		public String destruct(MovementScheme object) {
-			Accelerator ms = (Accelerator) object;
+			Blocker ms = (Blocker) object;
 			return ms.getDirection();
 		}
 	}

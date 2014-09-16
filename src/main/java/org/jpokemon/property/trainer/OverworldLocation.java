@@ -9,9 +9,6 @@ public class OverworldLocation {
 
 	protected String direction;
 
-	public OverworldLocation() {
-	}
-
 	public String getOverworld() {
 		return overworld;
 	}
@@ -46,8 +43,8 @@ public class OverworldLocation {
 
 	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public Class<? extends Object> getOutputClass() {
-			return OverworldLocation.class;
+		public String getId() {
+			return OverworldLocation.class.getName();
 		}
 
 		@Override

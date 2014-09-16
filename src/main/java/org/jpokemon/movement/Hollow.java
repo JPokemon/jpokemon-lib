@@ -1,26 +1,17 @@
 package org.jpokemon.movement;
 
 import org.jpokemon.api.MovementScheme;
+import org.jpokemon.builder.SingletonBuilder;
 
 public class Hollow extends MovementScheme {
-
 	@Override
-	public String getName() {
-		return getClass().getName();
+	public String getNextMove(String move) {
+		return move;
 	}
 
-	@Override
-	public boolean canEnterFrom(String direction) {
-		return true;
-	}
-
-	@Override
-	public boolean canExitToward(String direction) {
-		return true;
-	}
-
-	@Override
-	public String mustExitToward() {
-		return null;
+	public static class Builder extends SingletonBuilder<MovementScheme> {
+		public Builder() {
+			super(new Hollow());
+		}
 	}
 }

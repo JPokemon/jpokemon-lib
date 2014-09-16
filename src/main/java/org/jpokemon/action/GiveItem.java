@@ -38,8 +38,8 @@ public class GiveItem extends Action {
 
 	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public Class<? extends Action> getOutputClass() {
-			return GiveItem.class;
+		public String getId() {
+			return GiveItem.class.getName();
 		}
 
 		@Override

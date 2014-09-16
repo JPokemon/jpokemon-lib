@@ -1,20 +1,14 @@
 package org.jpokemon.manager;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.jpokemon.api.Action;
-import org.jpokemon.api.ActionFactory;
-import org.jpokemon.api.ActionSet;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Manager;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
-import org.jpokemon.api.Requirement;
-import org.jpokemon.api.RequirementFactory;
 import org.jpokemon.property.overworld.TmxFileProperties;
 import org.jpokemon.util.Options;
 import org.w3c.dom.Document;
@@ -50,13 +44,13 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	}
 
 	@Override
-	public boolean isRegistered(String name) {
-		return getByName(name) != null;
+	public Overworld create() throws JPokemonException {
+		throw new JPokemonException("Creation of overworlds via TMX file generation is unsupported");
 	}
 
 	@Override
-	public void register(Overworld managed) throws JPokemonException {
-		throw new JPokemonException("Registration of overworlds via TMX file creation is unsupported");
+	public boolean isRegistered(String name) {
+		return get(name) != null;
 	}
 
 	@Override
@@ -65,11 +59,11 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	}
 
 	@Override
-	public Overworld getByName(String name) throws JPokemonException {
+	public Overworld get(String name) throws JPokemonException {
 		Overworld overworld = new Overworld();
 		overworld.setName(name);
 		TmxFileProperties tmxFileProperties = new TmxFileProperties();
-		overworld.addProperty(tmxFileProperties);
+		overworld.setProperty(TmxFileProperties.class, tmxFileProperties);
 
 		try {
 			File mapFile = new File(folderPath, name + ".tmx");
@@ -81,8 +75,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 			overworld.setHeight(Integer.parseInt(mapNode.getAttributes().getNamedItem(MAP_HEIGHT_PROPERTY).getNodeValue()));
 			overworld.setWidth(Integer.parseInt(mapNode.getAttributes().getNamedItem(MAP_WIDTH_PROPERTY).getNodeValue()));
 
-			tmxFileProperties.setTileSize(Integer.parseInt(mapNode.getAttributes().getNamedItem(MAP_TILE_SIZE_PROPERTY)
-					.getNodeValue()));
+			tmxFileProperties.setTileSize(Integer.parseInt(mapNode.getAttributes().getNamedItem(MAP_TILE_SIZE_PROPERTY).getNodeValue()));
 
 			int entityZIndex = 1;
 
@@ -121,10 +114,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 							entity.setMovement(org.jpokemon.movement.Solid.class.getName());
 						}
 
-						List<String> triggers = new ArrayList<String>();
-
 						if (objectNode.getChildNodes().getLength() > 0) {
-							ActionSet anonymousActionSet = new ActionSet();
 							Node objectPropertiesNode = objectNode.getChildNodes().item(1);
 
 							for (int k = 0; k < objectPropertiesNode.getChildNodes().getLength(); k++) {
@@ -137,90 +127,12 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 								String objectPropertyName = objectPropertyNode.getAttributes().getNamedItem("name").getNodeValue();
 								String objectPropertyValue = objectPropertyNode.getAttributes().getNamedItem("value").getNodeValue();
 
-								if ("triggers".equals(objectPropertyName)) {
-									List<String> triggersList = Options.parseArray(objectPropertyValue);
+								List<String> triggersList = Options.parseArray(objectPropertyName);
+								List<String> actionSets = Options.parseArray(objectPropertyValue);
 
-									if (triggersList.isEmpty()) {
-										triggers.add(null);
-										triggers.add("interact");
-									}
-
-									for (String newTrigger : triggersList) {
-										triggers.add(newTrigger);
-									}
+								for (String trigger : triggersList) {
+									entity.getActionSets(trigger).addAll(actionSets);
 								}
-								else if ("actions".equals(objectPropertyName)) {
-									List<String> actionDatas = Options.parseArray(objectPropertyValue);
-
-									for (String ad : actionDatas) {
-										String[] actionData = ad.split(":");
-										String actionName = actionData[0];
-										String actionOptions = actionData[1];
-
-										ActionFactory actionFactory = ActionFactory.manager.getByName(actionName);
-										Action action = actionFactory.buildAction(actionOptions);
-										anonymousActionSet.addAction(action);
-									}
-								}
-								else if ("requirements".equals(objectPropertyName)) {
-									List<String> requirementDatas = Options.parseArray(objectPropertyValue);
-
-									for (String rd : requirementDatas) {
-										String[] requirementData = rd.split(":");
-										String requirementName = requirementData[0];
-										String requirementOptions = requirementData[1];
-
-										RequirementFactory requirementFactory = RequirementFactory.manager.getByName(requirementName);
-										Requirement requirement = requirementFactory.buildRequirement(requirementOptions);
-										anonymousActionSet.addRequirement(requirement);
-									}
-								}
-							}
-
-							for (String trigger : triggers) {
-								entity.getActionSets(trigger).add(anonymousActionSet);
-							}
-						}
-
-						if (ActionSet.manager != null) {
-							// do not name people the same as maps
-							for (String trigger : triggers) {
-								entity.getActionSets(trigger).addAll(ActionSet.manager.getAll(entity.getName(), trigger));
-							}
-						}
-
-						if (objectNode.getAttributes().getNamedItem("actions") != null) {
-							List<String> actionDatas = Options.parseArray(objectNode.getAttributes().getNamedItem("actions")
-									.getNodeValue());
-							ActionSet anonymousActionSet = new ActionSet();
-
-							for (String ad : actionDatas) {
-								String[] actionData = ad.split(":");
-								String actionName = actionData[0];
-								String actionOptions = actionData[1];
-
-								ActionFactory actionFactory = ActionFactory.manager.getByName(actionName);
-								Action action = actionFactory.buildAction(actionOptions);
-								anonymousActionSet.addAction(action);
-							}
-
-							if (objectNode.getAttributes().getNamedItem("requirements") != null) {
-								List<String> requirementDatas = Options.parseArray(objectNode.getAttributes().getNamedItem("actions")
-										.getNodeValue());
-
-								for (String rd : requirementDatas) {
-									String[] requirementData = rd.split(":");
-									String requirementName = requirementData[0];
-									String requirementOptions = requirementData[1];
-
-									RequirementFactory requirementFactory = RequirementFactory.manager.getByName(requirementName);
-									Requirement requirement = requirementFactory.buildRequirement(requirementOptions);
-									anonymousActionSet.addRequirement(requirement);
-								}
-							}
-
-							for (String trigger : triggers) {
-								entity.getActionSets(trigger).add(anonymousActionSet);
 							}
 						}
 
@@ -230,10 +142,8 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 						int yTile = yPixel / tmxFileProperties.getTileSize();
 						int xPixelOffset = xPixel - xTile * tmxFileProperties.getTileSize();
 						int yPixelOffset = yPixel - yTile * tmxFileProperties.getTileSize();
-						int pixelWidth = xPixelOffset
-								+ Integer.parseInt(objectNode.getAttributes().getNamedItem("width").getNodeValue());
-						int pixelHeight = yPixelOffset
-								+ Integer.parseInt(objectNode.getAttributes().getNamedItem("height").getNodeValue());
+						int pixelWidth = xPixelOffset + Integer.parseInt(objectNode.getAttributes().getNamedItem("width").getNodeValue());
+						int pixelHeight = yPixelOffset + Integer.parseInt(objectNode.getAttributes().getNamedItem("height").getNodeValue());
 
 						entity.setX(xTile);
 						entity.setY(yTile);
@@ -252,6 +162,11 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 		}
 
 		return overworld;
+	}
+
+	@Override
+	public void register(Overworld managed) throws JPokemonException {
+		throw new JPokemonException("Registration of overworlds via TMX file creation is unsupported");
 	}
 
 	@Override

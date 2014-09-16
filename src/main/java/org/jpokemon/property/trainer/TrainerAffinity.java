@@ -41,8 +41,8 @@ public class TrainerAffinity {
 
 	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public Class<? extends Object> getOutputClass() {
-			return TrainerAffinity.class;
+		public String getId() {
+			return TrainerAffinity.class.getName();
 		}
 
 		@Override

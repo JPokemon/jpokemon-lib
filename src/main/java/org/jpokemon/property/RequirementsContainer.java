@@ -32,10 +32,9 @@ public class RequirementsContainer {
 	}
 
 	public static class Builder implements org.jpokemon.api.Builder<Object> {
-
 		@Override
-		public Class<? extends Object> getOutputClass() {
-			return RequirementsContainer.class;
+		public String getId() {
+			return RequirementsContainer.class.getName();
 		}
 
 		@Override

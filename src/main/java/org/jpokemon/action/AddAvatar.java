@@ -28,8 +28,8 @@ public class AddAvatar extends Action {
 
 	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public Class<? extends Action> getOutputClass() {
-			return AddAvatar.class;
+		public String getId() {
+			return AddAvatar.class.getName();
 		}
 
 		@Override

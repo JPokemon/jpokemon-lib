@@ -38,8 +38,8 @@ public class PokemonHappiness extends Requirement {
 
 	public static class Builder implements org.jpokemon.api.Builder<Requirement> {
 		@Override
-		public Class<? extends Requirement> getOutputClass() {
-			return PokemonHappiness.class;
+		public String getId() {
+			return PokemonHappiness.class.getName();
 		}
 
 		@Override

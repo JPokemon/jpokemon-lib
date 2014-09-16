@@ -61,8 +61,8 @@ public class TrainerAffinity extends Requirement {
 
 	public static class Builder implements org.jpokemon.api.Builder<Requirement> {
 		@Override
-		public Class<? extends Requirement> getOutputClass() {
-			return TrainerAffinity.class;
+		public String getId() {
+			return TrainerAffinity.class.getName();
 		}
 
 		@Override

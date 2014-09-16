@@ -36,8 +36,8 @@ public class BattleEffectsContainer {
 
 	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public Class<? extends Object> getOutputClass() {
-			return BattleEffectsContainer.class;
+		public String getId() {
+			return BattleEffectsContainer.class.getName();
 		}
 
 		@Override

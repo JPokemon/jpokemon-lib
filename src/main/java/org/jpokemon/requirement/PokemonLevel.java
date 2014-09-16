@@ -44,8 +44,8 @@ public class PokemonLevel extends Requirement {
 
 	public static class Builder implements org.jpokemon.api.Builder<Requirement> {
 		@Override
-		public Class<? extends Requirement> getOutputClass() {
-			return PokemonLevel.class;
+		public String getId() {
+			return PokemonLevel.class.getName();
 		}
 
 		@Override

@@ -39,8 +39,8 @@ public class Avatars {
 
 	public static class Builder implements org.jpokemon.api.Builder<Object> {
 		@Override
-		public Class<? extends Object> getOutputClass() {
-			return Avatars.class;
+		public String getId() {
+			return Avatars.class.getName();
 		}
 
 		@Override

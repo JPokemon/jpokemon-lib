@@ -46,8 +46,8 @@ public class ChangeAffinity extends Action {
 
 	public static class Builder implements org.jpokemon.api.Builder<Action> {
 		@Override
-		public Class<? extends Action> getOutputClass() {
-			return ChangeAffinity.class;
+		public String getId() {
+			return ChangeAffinity.class.getName();
 		}
 
 		@Override
