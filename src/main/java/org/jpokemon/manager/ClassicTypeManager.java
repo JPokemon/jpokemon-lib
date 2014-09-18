@@ -80,96 +80,96 @@ public class ClassicTypeManager extends SimpleManager<Type> {
 	/** Provides the default constructor */
 	public ClassicTypeManager() {
 		super(Type.class);
-		register(new Type().setName(TYPE_QUESTION));
+		register(new Type().setId(TYPE_QUESTION).setName(TYPE_QUESTION));
 
-		register(new Type().setName(TYPE_NORMAL).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_NOT_VERY)
+		register(new Type().setId(TYPE_NORMAL).setName(TYPE_NORMAL).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GHOST, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_FIRE).setEffectiveness(TYPE_BUG, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_FIRE).setName(TYPE_FIRE).setEffectiveness(TYPE_BUG, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_ICE, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_WATER, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_WATER).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_WATER).setName(TYPE_WATER).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_WATER, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_GRASS).setEffectiveness(TYPE_WATER, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_GRASS).setName(TYPE_GRASS).setEffectiveness(TYPE_WATER, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_POISON, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_FLYING, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_BUG, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_ELECTRIC).setEffectiveness(TYPE_WATER, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_ELECTRIC).setName(TYPE_ELECTRIC).setEffectiveness(TYPE_WATER, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FLYING, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_ELECTRIC, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_GRASS, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_ICE).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_ICE).setName(TYPE_ICE).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FLYING, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_WATER, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_ICE, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_FIGHTING).setEffectiveness(TYPE_NORMAL, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_FIGHTING).setName(TYPE_FIGHTING).setEffectiveness(TYPE_NORMAL, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ICE, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_DARK, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_STEEL, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_POISON, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_FLYING, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_BUG, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GHOST, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_POISON).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_POISON).setName(TYPE_POISON).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_POISON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_GHOST, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_STEEL, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_GROUND).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_GROUND).setName(TYPE_GROUND).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ELECTRIC, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_POISON, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ROCK, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_STEEL, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_BUG, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_FLYING, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_FLYING).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_FLYING).setName(TYPE_FLYING).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_BUG, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ELECTRIC, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_ROCK, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_PSYCHIC).setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_PSYCHIC).setName(TYPE_PSYCHIC).setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_POISON, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_DARK, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_BUG).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_BUG).setName(TYPE_BUG).setEffectiveness(TYPE_GRASS, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_DARK, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_POISON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_FLYING, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_GHOST, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_ROCK).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_ROCK).setName(TYPE_ROCK).setEffectiveness(TYPE_FIRE, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ICE, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FLYING, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_BUG, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_GROUND, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_GHOST).setEffectiveness(TYPE_GHOST, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_GHOST).setName(TYPE_GHOST).setEffectiveness(TYPE_GHOST, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_DARK, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_NORMAL, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_DRAGON).setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_DRAGON).setName(TYPE_DRAGON).setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_INEFFECTIVE));
 
-		register(new Type().setName(TYPE_DARK).setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_DARK).setName(TYPE_DARK).setEffectiveness(TYPE_PSYCHIC, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_GHOST, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_DARK, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_STEEL).setEffectiveness(TYPE_ICE, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_STEEL).setName(TYPE_STEEL).setEffectiveness(TYPE_ICE, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_ROCK, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FAIRY, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_WATER, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_ELECTRIC, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
 
-		register(new Type().setName(TYPE_FAIRY).setEffectiveness(TYPE_DARK, EFFECTIVENESS_SUPER)
+		register(new Type().setId(TYPE_FAIRY).setName(TYPE_FAIRY).setEffectiveness(TYPE_DARK, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_DRAGON, EFFECTIVENESS_SUPER).setEffectiveness(TYPE_FIGHTING, EFFECTIVENESS_SUPER)
 				.setEffectiveness(TYPE_FIRE, EFFECTIVENESS_NOT_VERY).setEffectiveness(TYPE_POISON, EFFECTIVENESS_NOT_VERY)
 				.setEffectiveness(TYPE_STEEL, EFFECTIVENESS_NOT_VERY));
