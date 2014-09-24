@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.jpokemon.api.Builder;
 import org.jpokemon.api.JPokemonException;
 import org.jpokemon.api.Manager;
+import org.jpokemon.api.MovementScheme;
 import org.jpokemon.api.Overworld;
 import org.jpokemon.api.OverworldEntity;
+import org.jpokemon.movement.Solid;
 import org.jpokemon.property.overworld.TmxFileProperties;
 import org.jpokemon.util.Options;
 import org.w3c.dom.Document;
@@ -108,10 +111,29 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 
 						if (objectNode.getAttributes().getNamedItem("type") != null) {
 							String objectType = objectNode.getAttributes().getNamedItem("type").getNodeValue();
-							entity.setMovement(objectType);
+							int colonIndex = objectType.indexOf(':');
+							Builder<MovementScheme> builder = null;
+							String options = null;
+							
+							if (colonIndex > 0) {
+								String builderId = objectType.substring(0, colonIndex);
+								builder = MovementScheme.builders.get(builderId);
+								options = objectType.substring(colonIndex + 1);
+							}
+							else {
+								builder = MovementScheme.builders.get(objectType);
+							}
+							
+							if (builder != null) {
+								entity.setMovement(builder.construct(options));
+							}
+							else {
+								// TODO log there was no builder found
+								entity.setMovement(new Solid());
+							}
 						}
 						else {
-							entity.setMovement(org.jpokemon.movement.Solid.class.getName());
+							entity.setMovement(new Solid());
 						}
 
 						if (objectNode.getChildNodes().getLength() > 0) {
