@@ -64,6 +64,7 @@ public class TmxFileOverworldManager implements Manager<Overworld> {
 	@Override
 	public Overworld get(String name) throws JPokemonException {
 		Overworld overworld = new Overworld();
+		overworld.setId(name);
 		overworld.setName(name);
 		TmxFileProperties tmxFileProperties = new TmxFileProperties();
 		overworld.setProperty(TmxFileProperties.class, tmxFileProperties);
