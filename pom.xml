@@ -3,24 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Project details -->
-	<groupId>org.jpokemon</groupId>
-	<artifactId>jpokemon-lib</artifactId>
+	<groupId>org.ospokemon</groupId>
+	<artifactId>lib-java</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>JPokemon API Implementations</name>
-	<description>Specific implementations of jpokemon-api classes and interfaces</description>
+	<name>The Open Source Pokemon Project library.</name>
+	<description>Specific implementations of OSPokemon API classes and interfaces</description>
 	<inceptionYear>2014</inceptionYear>
-	<url>http://jpokemon.org</url>
+	<url>http://ospokemon.org</url>
 
-	<!-- Project properties & definitions -->
 	<properties>
 		<finalName>${project.artifactId}-${project.version}.jar</finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
-	<!-- The project is licensed under the MIT -->
 	<licenses>
 		<license>
 			<name>The MIT License</name>
@@ -28,14 +25,12 @@
 		</license>
 	</licenses>
 
-	<!-- Source code repository -->
 	<scm>
-		<connection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</connection>
-		<developerConnection>scm:git:https://github.com/JPokemon/jpokemon-lib.git</developerConnection>
-		<url>https://github.com/JPokemon/jpokemon-lib</url>
+		<connection>scm:git:https://github.com/OSPokemon/lib-java.git</connection>
+		<developerConnection>scm:git:https://github.com/OSPokemon/lib-java.git</developerConnection>
+		<url>https://github.com/OSPokemon/lib-java</url>
 	</scm>
 
-	<!-- Developers -->
 	<developers>
 		<developer>
 			<name>Zach Taylor</name>
@@ -43,11 +38,10 @@
 		</developer>
 	</developers>
 
-	<!-- Project dependencies -->
 	<dependencies>
 		<dependency>
-			<groupId>org.jpokemon</groupId>
-			<artifactId>jpokemon-api</artifactId>
+			<groupId>org.ospokemon</groupId>
+			<artifactId>api-java</artifactId>
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -58,7 +52,6 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Build information -->
 	<build>
 		<plugins>
 			<plugin>
@@ -69,6 +62,21 @@
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
